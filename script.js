@@ -1,3 +1,14 @@
+const texts = ["The text is a corrupted version of the original and therefore does not mean anything in particular",
+                "The book however where it originates discusses the philosophical views of Epicureanism, Stoicism, and the Platonism of Antiochus of Ascalon",
+                "Random Text Generator is a web application which provides true random text which you can use in your documents or web designs",
+                "Also when you use plain Lorem ipsum text, your design will look like a million other designs out there",
+                "When we show a design to a client we want to have some text that doesn't mean anything in particular just to indicate that"]
+
+const quoteDisplay = document.getElementById("quoteDisplay")
+const quoteInput = document.getElementById("quoteInput")
+quoteInput.addEventListener("input", checkLetters)
+
+let correctWords = 0;
 let time = 0;
 
 function generateRandomQuote() {
@@ -9,6 +20,7 @@ function generateRandomQuote() {
         quoteDisplay.appendChild(quoteSpan)
     }
 }
+
 generateRandomQuote()
 
 function checkLetters() {
