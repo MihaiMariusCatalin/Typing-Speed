@@ -8,6 +8,8 @@ const quoteDisplay = document.getElementById("quoteDisplay")
 const quoteInput = document.getElementById("quoteInput")
 quoteInput.addEventListener("input", checkLetters)
 
+const THOUSAND = 1000;
+const MAX_TIMER = 60;
 let correctWords = 0;
 let time = 0;
 
@@ -20,31 +22,28 @@ function generateRandomQuote() {
         quoteDisplay.appendChild(quoteSpan)
     }
 }
-
 generateRandomQuote()
 
 function checkLetters() {
-    if (time == 60) {
+    if (time === MAX_TIMER) {
         return
     }
-    const array = document.querySelectorAll("span")
-    const value = quoteInput.value.split('')
-    array.forEach((characterSpan, index) => {
-        const character = value[index]
+    const textArray = document.querySelectorAll("span")
+    const inputValue = quoteInput.value.split('')
+    textArray.forEach((characterSpan, index) => {
+        const character = inputValue[index]
         if (character == null) {
             characterSpan.classList.remove('correct')
             characterSpan.classList.remove('wrong')
-        }
-        else if (character == characterSpan.innerText) {
+        } else if (character === characterSpan.innerText) {
             characterSpan.classList.add('correct')
             characterSpan.classList.remove('wrong')
-        }
-        else if (character != characterSpan.innerText) {
+        } else if (character !== characterSpan.innerText) {
             characterSpan.classList.remove('correct')
             characterSpan.classList.add('wrong')
         }
     })
-    if (array.length == value.length) {
+    if (textArray.length === inputValue.length) {
         checkWords()
         document.getElementById('quoteInput').value = "";
         generateRandomQuote()
@@ -53,25 +52,26 @@ function checkLetters() {
 
 function checkWords() {
     const words = document.getElementById('quoteDisplay').innerText.split(' ')
-    const value = quoteInput.value.split(' ')
+    const inputValue = quoteInput.value.split(' ')
     for (let i = 0; i < words.length; ++i) {
-        if (words[i] == value[i]) {
+        if (words[i] === inputValue[i]) {
             ++correctWords
         }
     }
 }
 
 function increaseTime() {
-    if (time == 60) {
+    if (time === MAX_TIMER) {
         return
     }
     ++time;
     document.getElementById('timer').innerText = time
-    if (time == 60) {
+    if (time === MAX_TIMER) {
         checkWords()
         document.getElementById('correctWords').innerText = correctWords
-        document.getElementById('wordsPerMinute').innerText = (Math.round((correctWords / 60) * 100) / 100).toFixed(2)
+        document.getElementById('wordsPerMinute').innerText = 
+        (Math.round((correctWords / 60) * 100) / 100).toFixed(2)
     }
 }
 
-setInterval(increaseTime, 1000)
+setInterval(increaseTime, THOUSAND)
